@@ -11,5 +11,6 @@
     "url": "backend-nodejs"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "type": "module"
 }
