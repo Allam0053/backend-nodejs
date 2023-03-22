@@ -1,8 +1,9 @@
-import coffee from "./lib/coffee.js";
+import app from "./app.js";
 
-// console.log(coffee);
-function main() {
-  console.log(coffee);
-}
+app();
 
-main();
+/**
+ * output:
+ * Kopi Tubruk telah dibuat!
+ * Bill sebesar 15000 telah dibuat!
+ */
