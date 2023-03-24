@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-export default function app() {
+export default function ReadableStreamDemo() {
   const readableStream = fs.createReadStream("./filesystem/article.txt", {
     highWaterMark: 10,
   });
