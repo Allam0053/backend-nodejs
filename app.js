@@ -1,48 +1,46 @@
-// const { EventEmitter } = require("events");
-import { EventEmitter } from "events";
+import fs from "fs";
+import path from "path";
 
-// Challenge
 export default function app() {
-  // TODO 1
-  const myEventEmitter = new EventEmitter();
-
-  const birthdayEventListener = (name) => {
-    console.log(`Happy birthday ${name}!`);
+  const fileReadCallback = (error, data) => {
+    if (error) {
+      console.log("Gagal membaca berkas");
+      return;
+    }
+    console.log(data);
   };
 
-  // TODO 2
+  const readFiles = fs.readdirSync("filesystem");
 
-  // TODO 3
-  myEventEmitter.on("birthday", birthdayEventListener);
+  /** to be fixed */
+  const allSources = readFiles.reduce((allSource, val) => {
+    const data = fs.readFileSync(`filesystem/${val}`, "UTF-8");
+    return [...allSource, data];
+  }, []);
+  /** to be fixed */
 
-  // TODO 4
-  myEventEmitter.emit("birthday", "Allam");
+  allSources.forEach((val) => console.log(val, "\n"));
 }
 
-// Excercise
-export function makeCoffeeTubruk() {
-  const myEventEmitter = new EventEmitter();
+// export default function nowTo2030() {
+//   const today = new Date();
+//   const newYear = new Date("2030-01-01");
 
-  const makeCoffee = (name) => {
-    console.log(`Kopi ${name} telah dibuat!`);
-  };
+//   const timeDiff = newYear.getTime() - today.getTime();
+//   const daysDiff = timeDiff / (1000 * 60 * 60 * 24);
 
-  const makeBill = (price) => {
-    console.log(`Bill sebesar ${price} telah dibuat!`);
-  };
+//   console.log(
+//     `There are ${Math.floor(daysDiff)} days until January 1st, 2030.`
+//   );
+// }
 
-  const onCoffeeOrderedListener = ({ name, price }) => {
-    makeCoffee(name);
-    makeBill(price);
-  };
+// export default function featureTest() {
+//   console.log(path.resolve("filesystem", "notes.txt"));
+// }
 
-  myEventEmitter.on("coffee-order", onCoffeeOrderedListener);
+// console.log(fs.readdirSync("filesystem"));
 
-  myEventEmitter.emit("coffee-order", { name: "Tubruk", price: 15000 });
-}
+// fs.readFile("todo.txt", "UTF-8", fileReadCallback);
 
-/**
- * output:
- * Kopi Tubruk telah dibuat!
- * Bill sebesar 15000 telah dibuat!
- */
+// const data = fs.readFileSync("todo.txt", "UTF-8");
+// console.log(data);
