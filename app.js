@@ -1,24 +1,32 @@
 import fs from "fs";
 import path from "path";
 
-export default function ReadableStreamDemo() {
-  const readableStream = fs.createReadStream("./filesystem/article.txt", {
-    highWaterMark: 10,
-  });
+export default function WritableStreamDemo() {
+  const writableStream = fs.createWriteStream("./filesystem/output.txt");
 
-  readableStream.on("readable", () => {
-    try {
-      process.stdout.write(`[${readableStream.read()}]`);
-    } catch (error) {
-      // catch the error when the chunk cannot be read.
-      console.log("{{ error }}");
-    }
-  });
-
-  readableStream.on("end", () => {
-    console.log("Done");
-  });
+  writableStream.write("Ini merupakan teks baris pertama!\n");
+  writableStream.write("Ini merupakan teks baris kedua!\n");
+  writableStream.end("Akhir dari writable stream!");
 }
+
+// export default function ReadableStreamDemo() {
+//   const readableStream = fs.createReadStream("./filesystem/article.txt", {
+//     highWaterMark: 10,
+//   });
+
+//   readableStream.on("readable", () => {
+//     try {
+//       process.stdout.write(`[${readableStream.read()}]`);
+//     } catch (error) {
+//       // catch the error when the chunk cannot be read.
+//       console.log("{{ error }}");
+//     }
+//   });
+
+//   readableStream.on("end", () => {
+//     console.log("Done");
+//   });
+// }
 
 // export default function app() {
 //   const fileReadCallback = (error, data) => {
