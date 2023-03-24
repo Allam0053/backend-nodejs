@@ -2,25 +2,44 @@ import fs from "fs";
 import path from "path";
 
 export default function app() {
-  const fileReadCallback = (error, data) => {
-    if (error) {
-      console.log("Gagal membaca berkas");
-      return;
+  const readableStream = fs.createReadStream("./filesystem/article.txt", {
+    highWaterMark: 10,
+  });
+
+  readableStream.on("readable", () => {
+    try {
+      process.stdout.write(`[${readableStream.read()}]`);
+    } catch (error) {
+      // catch the error when the chunk cannot be read.
+      console.log("{{ error }}");
     }
-    console.log(data);
-  };
+  });
 
-  const readFiles = fs.readdirSync("filesystem");
-
-  /** to be fixed */
-  const allSources = readFiles.reduce((allSource, val) => {
-    const data = fs.readFileSync(`filesystem/${val}`, "UTF-8");
-    return [...allSource, data];
-  }, []);
-  /** to be fixed */
-
-  allSources.forEach((val) => console.log(val, "\n"));
+  readableStream.on("end", () => {
+    console.log("Done");
+  });
 }
+
+// export default function app() {
+//   const fileReadCallback = (error, data) => {
+//     if (error) {
+//       console.log("Gagal membaca berkas");
+//       return;
+//     }
+//     console.log(data);
+//   };
+
+//   const readFiles = fs.readdirSync("filesystem");
+
+//   /** to be fixed */
+//   const allSources = readFiles.reduce((allSource, val) => {
+//     const data = fs.readFileSync(`filesystem/${val}`, "UTF-8");
+//     return [...allSource, data];
+//   }, []);
+//   /** to be fixed */
+
+//   allSources.forEach((val) => console.log(val, "\n"));
+// }
 
 // export default function nowTo2030() {
 //   const today = new Date();
